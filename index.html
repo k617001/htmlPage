@@ -76,16 +76,20 @@ Date.prototype.dateDiff = function(interval,objDate){
     var ms = 1000 - now.getMilliseconds();
     
 	if(day <= 0) {
+		$('#time').html(0);
 		$('#hour').html(0);
+		$('#mm').html(0);
+		$('#ss').html(0);
+		$('#ms').html(0);
 		return;
 	}
 	
 	
     $('#time').html(day);
     $('#hour').html(hours);
-    $('#mm').html(59 - mm);
-    $('#ss').html(59 - ss);
-    $('#ms').html(1000 - ms);
+    $('#mm').html(mm);
+    $('#ss').html(ss);
+    $('#ms').html(ms);
   setTimeout('timeSet()',  50);
   }
 </script>
