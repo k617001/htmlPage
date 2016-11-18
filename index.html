@@ -7,24 +7,25 @@
 </head>
 <body>
   
-<div id="time1" style="font-size:10px;width:100%;margin:0 auto;"></div>
-<span id="time" style="font-size:300px;width:700px;margin:0 auto;"></span>
-<span style="font-size:30px">天 </span>
-<span id="hour" style="font-size:10px;"></span>
-<span style="font-size:10px">時 </span>
-<span id="mm" style="font-size:10px;"></span>
-<span style="font-size:10px">分 </span>
-<span id="ss" style="font-size:10px;"></span>
-<span style="font-size:10px">秒 </span>
-<span id="ms" style="font-size:10px;"></span>
-
+  <p>Date: <input type="text" id="datepicker" size="30"><button id="submit">Submit</button></p>
+  <div id="sshow" style="display:">
+		<div id="time1" style="font-size:10px;width:100%;margin:0 auto;"></div>
+		<span id="time" style="font-size:300px;width:700px;margin:0 auto;"></span>
+		<span style="font-size:30px">天 </span>
+		<span id="hour" style="font-size:10px;"></span>
+		<span style="font-size:10px">時 </span>
+		<span id="mm" style="font-size:10px;"></span>
+		<span style="font-size:10px">分 </span>
+		<span id="ss" style="font-size:10px;"></span>
+		<span style="font-size:10px">秒 </span>
+		<span id="ms" style="font-size:10px;"></span>
+	</div>
+	
+<link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-  var endDay = '2017/02/01';
-  
-  var sDT = new Date();
-  var eDT = new Date(endDay);
-  
+
   
 Date.prototype.dateDiff = function(interval,objDate){
     var dtEnd = new Date(objDate);
@@ -39,19 +40,49 @@ Date.prototype.dateDiff = function(interval,objDate){
     case "y":return dtEnd.getFullYear() - this.getFullYear();
     }
   }
+
+  var endDay = '2017/02/01';
+  var sDT = new Date();
+  var eDT;
   
-  $('#time1').html('離 ' + endDay + ' 還有..');
-  timeSet();
+	$( "#datepicker" ).datepicker(
+		{
+			dateFormat:'yy-mm-dd'
+		} 
+	);
+  
+  $("#datepicker").val(endDay);
+  run();
+  
+  $('#submit').click(function() {
+	run();
+  });
+  
+  function run() {
+  	endDay = $('#datepicker').val();
+	eDT = new Date(endDay);
+	
+	$('#time1').html('離 ' + endDay + ' 還有..');
+	timeSet();
+  }
+  
   
   function timeSet() {
     var now = new Date();
-    var hours = now.getHours();
-    var mm = now.getMinutes();
-    var ss = now.getSeconds();
-    var ms = now.getMilliseconds();
+	var day = sDT.dateDiff("d",eDT);
+    var hours = 23 - now.getHours();
+    var mm = 59 - now.getMinutes();
+    var ss = 59 - now.getSeconds();
+    var ms = 1000 - now.getMilliseconds();
     
-    $('#time').html(sDT.dateDiff("d",eDT));
-    $('#hour').html(23 - hours);
+	if(day <= 0) {
+		$('#hour').html(0);
+		return;
+	}
+	
+	
+    $('#time').html(day);
+    $('#hour').html(hours);
     $('#mm').html(59 - mm);
     $('#ss').html(59 - ss);
     $('#ms').html(1000 - ms);
