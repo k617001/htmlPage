@@ -7,7 +7,7 @@
 </head>
 <body>
   
-  <p>Date: <input type="text" id="datepicker" size="30"><button id="submit">Submit</button></p>
+  <p>Date: <input type="text" id="datepicker" size="30"></p>
   <div id="sshow" style="display:">
 		<div id="time1" style="font-size:10px;width:100%;margin:0 auto;"></div>
 		<span id="time" style="font-size:300px;width:700px;margin:0 auto;"></span>
@@ -47,16 +47,15 @@ Date.prototype.dateDiff = function(interval,objDate){
   
 	$( "#datepicker" ).datepicker(
 		{
-			dateFormat:'yy-mm-dd'
+			dateFormat:'yy-mm-dd',
+			onSelect: function(dateText) {
+				run();
+			}
 		} 
 	);
   
   $("#datepicker").val(endDay);
   run();
-  
-  $('#submit').click(function() {
-	run();
-  });
   
   function run() {
   	endDay = $('#datepicker').val();
