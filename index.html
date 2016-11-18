@@ -75,7 +75,7 @@ Date.prototype.dateDiff = function(interval,objDate){
     var ss = 59 - now.getSeconds();
     var ms = 1000 - now.getMilliseconds();
     
-	if(day <= 0) {
+	if(day <= 0 && hours <= 0 && mm <= 0 && ss <= 0 && ms <= 0) {
 		$('#time').html(0);
 		$('#hour').html(0);
 		$('#mm').html(0);
